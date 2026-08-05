@@ -52,7 +52,7 @@ function LoginForm({ onSwitch }) {
       <InputField label="Phone Number" error={''}>
         <div className="relative">
           <Phone size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
-          <input type="tel" placeholder="e.g. 0311-9952385" value={form.phone}
+          <input type="tel" placeholder="e.g. 0311-9523856" value={form.phone}
             onChange={e => set('phone', e.target.value)} className={`${inp(false)} pl-11`} />
         </div>
       </InputField>
@@ -141,7 +141,7 @@ function SignupForm({ onSwitch }) {
       <InputField label="Phone Number" error={errors.phone}>
         <div className="relative">
           <Phone size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
-          <input type="tel" placeholder="e.g. 0311-9952385" value={form.phone}
+          <input type="tel" placeholder="e.g. 0311-9523856" value={form.phone}
             onChange={e => set('phone', e.target.value)} className={`${inp(errors.phone)} pl-11`} />
         </div>
       </InputField>

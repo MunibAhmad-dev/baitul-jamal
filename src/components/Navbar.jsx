@@ -1,11 +1,13 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo, useRef } from 'react'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
-import { Search, ShoppingCart, Menu, X, ChevronDown, Phone, Heart, User, LogOut, Package } from 'lucide-react'
+import { Search, ShoppingCart, Menu, X, ChevronDown, Phone, Heart, User, LogOut, Package, ArrowRight } from 'lucide-react'
 import Logo from './Logo'
 import { useCart } from '@/context/CartContext'
 import { useAuth } from '@/context/AuthContext'
 import { useWishlist } from '@/context/WishlistContext'
 import { categories } from '@/data/categories'
+import { products } from '@/data/products'
+import { formatPrice } from '@/lib/utils'
 
 export default function Navbar() {
   const { totalItems, setIsOpen } = useCart()
@@ -16,6 +18,8 @@ export default function Navbar() {
   const [searchOpen, setSearchOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
   const [accountOpen, setAccountOpen] = useState(false)
+  const [activeIdx, setActiveIdx] = useState(-1)
+  const searchRef = useRef(null)
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -24,13 +28,60 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handler)
   }, [])
 
+  // click outside closes search
+  useEffect(() => {
+    const handler = (e) => {
+      if (searchRef.current && !searchRef.current.contains(e.target)) {
+        setSearchOpen(false)
+        setSearchQuery('')
+      }
+    }
+    document.addEventListener('mousedown', handler)
+    return () => document.removeEventListener('mousedown', handler)
+  }, [])
+
+  const suggestions = useMemo(() => {
+    const q = searchQuery.trim().toLowerCase()
+    if (q.length < 1) return { cats: [], prods: [] }
+    const cats = categories.filter(c =>
+      c.name.toLowerCase().includes(q) || (c.nameUrdu && c.nameUrdu.includes(q))
+    ).slice(0, 2)
+    const prods = products.filter(p =>
+      p.name.toLowerCase().includes(q) ||
+      (p.nameUrdu && p.nameUrdu.includes(q)) ||
+      p.category.includes(q) ||
+      (p.description && p.description.toLowerCase().includes(q))
+    ).slice(0, 5)
+    return { cats, prods }
+  }, [searchQuery])
+
+  const hasSuggestions = suggestions.cats.length > 0 || suggestions.prods.length > 0
+  const allSuggestions = [
+    ...suggestions.cats.map(c => ({ type: 'cat', ...c })),
+    ...suggestions.prods.map(p => ({ type: 'prod', ...p })),
+  ]
+
+  const closeSearch = () => { setSearchOpen(false); setSearchQuery(''); setActiveIdx(-1) }
+
   const handleSearch = (e) => {
     e.preventDefault()
+    if (activeIdx >= 0 && allSuggestions[activeIdx]) {
+      const s = allSuggestions[activeIdx]
+      navigate(s.type === 'cat' ? `/products?category=${s.id}` : `/product/${s.id}`)
+      closeSearch()
+      return
+    }
     if (searchQuery.trim()) {
       navigate(`/products?q=${encodeURIComponent(searchQuery.trim())}`)
-      setSearchOpen(false)
-      setSearchQuery('')
+      closeSearch()
     }
+  }
+
+  const handleKey = (e) => {
+    if (!hasSuggestions) return
+    if (e.key === 'ArrowDown') { e.preventDefault(); setActiveIdx(i => Math.min(i + 1, allSuggestions.length - 1)) }
+    if (e.key === 'ArrowUp')   { e.preventDefault(); setActiveIdx(i => Math.max(i - 1, -1)) }
+    if (e.key === 'Escape')    { closeSearch() }
   }
 
   return (
@@ -38,7 +89,7 @@ export default function Navbar() {
       {/* Top announcement bar */}
       <div className="bg-brand-900 text-white text-center text-xs py-2 px-4 font-medium tracking-wide">
         <span className="hidden sm:inline">🚚 Free Delivery in Timergara &nbsp;|&nbsp; 📞 Call us: </span>
-        <a href="tel:+9231199523856" className="underline underline-offset-2 hover:text-gold-300 transition-colors">+92 311 9952 3856</a>
+        <a href="tel:+923119523856" className="underline underline-offset-2 hover:text-gold-300 transition-colors">+92 311 9523856</a>
         <span className="hidden sm:inline"> &nbsp;|&nbsp; Cash on Delivery Available</span>
       </div>
 
@@ -118,7 +169,7 @@ export default function Navbar() {
 
               {/* Call button (desktop only) */}
               <a
-                href="tel:+9231199523856"
+                href="tel:+923119523856"
                 className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-full text-brand border border-brand-200 text-sm font-medium hover:bg-brand-50 transition-colors"
               >
                 <Phone size={14} />
@@ -223,17 +274,90 @@ export default function Navbar() {
 
           {/* Search bar */}
           {searchOpen && (
-            <div className="pb-3 animate-fade-in">
+            <div className="pb-3 animate-fade-in" ref={searchRef}>
               <form onSubmit={handleSearch} className="relative">
-                <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
+                <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 z-10" />
                 <input
                   autoFocus
                   type="text"
                   value={searchQuery}
-                  onChange={e => setSearchQuery(e.target.value)}
-                  placeholder="Search for mattresses, carpets, qaleen..."
-                  className="w-full pl-11 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm outline-none focus:border-brand focus:ring-2 focus:ring-brand-100 transition-all"
+                  onChange={e => { setSearchQuery(e.target.value); setActiveIdx(-1) }}
+                  onKeyDown={handleKey}
+                  placeholder="Search for majalis, qaleen, curtains..."
+                  className="w-full pl-11 pr-10 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm outline-none focus:border-brand focus:ring-2 focus:ring-brand/10 transition-all"
                 />
+                {searchQuery && (
+                  <button type="button" onClick={closeSearch}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
+                    <X size={16} />
+                  </button>
+                )}
+
+                {/* Suggestions dropdown */}
+                {hasSuggestions && (
+                  <div className="absolute top-full left-0 right-0 mt-1.5 bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden z-50">
+
+                    {/* Categories */}
+                    {suggestions.cats.length > 0 && (
+                      <div>
+                        <p className="px-4 pt-3 pb-1 text-[10px] font-bold uppercase tracking-widest text-gray-400">Categories</p>
+                        {suggestions.cats.map((cat, i) => {
+                          const idx = i
+                          return (
+                            <button key={cat.id} type="button"
+                              onClick={() => { navigate(`/products?category=${cat.id}`); closeSearch() }}
+                              className={`w-full flex items-center gap-3 px-4 py-2.5 text-left transition-colors ${activeIdx === idx ? 'bg-brand-50' : 'hover:bg-gray-50'}`}
+                            >
+                              <span className={`w-8 h-8 rounded-lg bg-gradient-to-br ${cat.gradient} flex items-center justify-center text-white text-xs font-bold flex-shrink-0`}>
+                                {cat.name[0]}
+                              </span>
+                              <div className="flex-1 min-w-0">
+                                <p className="text-sm font-semibold text-gray-800">{cat.name}</p>
+                                <p className="text-xs text-gray-400">{cat.nameUrdu}</p>
+                              </div>
+                              <ArrowRight size={14} className="text-gray-300" />
+                            </button>
+                          )
+                        })}
+                      </div>
+                    )}
+
+                    {/* Products */}
+                    {suggestions.prods.length > 0 && (
+                      <div>
+                        <p className="px-4 pt-3 pb-1 text-[10px] font-bold uppercase tracking-widest text-gray-400">Products</p>
+                        {suggestions.prods.map((prod, i) => {
+                          const idx = suggestions.cats.length + i
+                          return (
+                            <button key={prod.id} type="button"
+                              onClick={() => { navigate(`/product/${prod.id}`); closeSearch() }}
+                              className={`w-full flex items-center gap-3 px-4 py-2.5 text-left transition-colors ${activeIdx === idx ? 'bg-brand-50' : 'hover:bg-gray-50'}`}
+                            >
+                              <div className="w-10 h-10 rounded-lg overflow-hidden bg-gray-100 flex-shrink-0">
+                                {prod.image
+                                  ? <img src={prod.image} alt="" className="w-full h-full object-cover" />
+                                  : <div className={`w-full h-full bg-gradient-to-br ${prod.gradient}`} />
+                                }
+                              </div>
+                              <div className="flex-1 min-w-0">
+                                <p className="text-sm font-semibold text-gray-800 truncate">{prod.name}</p>
+                                <p className="text-xs text-gray-400 capitalize">{prod.category}</p>
+                              </div>
+                              <p className="text-sm font-bold text-brand flex-shrink-0">{formatPrice(prod.price)}</p>
+                            </button>
+                          )
+                        })}
+                      </div>
+                    )}
+
+                    {/* View all */}
+                    <button type="submit"
+                      className="w-full flex items-center justify-center gap-2 px-4 py-3 text-sm font-semibold text-brand hover:bg-brand-50 border-t border-gray-100 transition-colors">
+                      <Search size={14} />
+                      See all results for "{searchQuery}"
+                    </button>
+                  </div>
+                )}
               </form>
             </div>
           )}
@@ -285,9 +409,9 @@ export default function Navbar() {
                     <User size={16} className="text-gray-400" /> Login / Sign Up
                   </Link>
                 )}
-                <a href="tel:+9231199523856" className="flex items-center justify-center gap-2 w-full py-3 bg-brand text-white rounded-xl text-sm font-semibold">
+                <a href="tel:+923119523856" className="flex items-center justify-center gap-2 w-full py-3 bg-brand text-white rounded-xl text-sm font-semibold">
                   <Phone size={16} />
-                  Call to Order: +92 311 9952 3856
+                  Call to Order: +92 311 9523856
                 </a>
               </div>
             </div>

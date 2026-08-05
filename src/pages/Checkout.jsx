@@ -54,7 +54,7 @@ export default function Checkout() {
     if (!form.name.trim()) e.name = 'Full name is required'
     if (!form.phone.trim()) e.phone = 'Phone number is required'
     else if (!/^(03\d{9}|3\d{9})$/.test(form.phone.replace(/[\s-]/g, '')))
-      e.phone = 'Enter a valid number e.g. 0311-9952385'
+      e.phone = 'Enter a valid number e.g. 0311-9523856'
     if (!form.city.trim()) e.city = 'City / area is required'
     if (!form.address.trim()) e.address = 'Delivery address is required'
     return e
@@ -135,7 +135,7 @@ export default function Checkout() {
                   <Field label="Phone Number" error={errors.phone}>
                     <input
                       type="tel"
-                      placeholder="e.g. 0311-9952385"
+                      placeholder="e.g. 0311-9523856"
                       value={form.phone}
                       onChange={e => set('phone', e.target.value)}
                       className={inputCls(errors.phone)}

@@ -121,13 +121,13 @@ function OrderCard({ order }) {
       {/* Contact actions */}
       <div className="px-6 pb-5 flex gap-3">
         <a
-          href="tel:+9231199523856"
+          href="tel:+923119523856"
           className="flex-1 flex items-center justify-center gap-2 py-2.5 bg-brand-50 text-brand text-sm font-semibold rounded-xl hover:bg-brand-100 transition-colors"
         >
           <Phone size={15} /> Call Us
         </a>
         <a
-          href={`https://wa.me/9231199523856?text=${encodeURIComponent(`Order ID: ${order.id} — tracking inquiry`)}`}
+          href={`https://wa.me/923119523856?text=${encodeURIComponent(`Order ID: ${order.id} — tracking inquiry`)}`}
           target="_blank"
           rel="noopener noreferrer"
           className="flex-1 flex items-center justify-center gap-2 py-2.5 bg-green-50 text-green-700 text-sm font-semibold rounded-xl hover:bg-green-100 transition-colors"
@@ -202,10 +202,10 @@ export default function TrackOrder() {
                 Check your Order ID or phone number and try again.
               </p>
               <a
-                href="tel:+9231199523856"
+                href="tel:+923119523856"
                 className="mt-4 inline-flex items-center gap-2 text-brand text-sm font-semibold hover:underline"
               >
-                <Phone size={14} /> Call us for help: +92 311 9952 3856
+                <Phone size={14} /> Call us for help: +92 311 9523856
               </a>
             </div>
           ) : (
@@ -220,10 +220,10 @@ export default function TrackOrder() {
           <div className="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm text-center">
             <p className="text-sm text-gray-500 mb-3">Need help with your order?</p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
-              <a href="tel:+9231199523856" className="flex items-center justify-center gap-2 text-brand font-semibold text-sm py-2.5 px-5 bg-brand-50 rounded-xl hover:bg-brand-100 transition-colors">
-                <Phone size={15} /> +92 311 9952 3856
+              <a href="tel:+923119523856" className="flex items-center justify-center gap-2 text-brand font-semibold text-sm py-2.5 px-5 bg-brand-50 rounded-xl hover:bg-brand-100 transition-colors">
+                <Phone size={15} /> +92 311 9523856
               </a>
-              <a href="https://wa.me/9231199523856" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 text-green-700 font-semibold text-sm py-2.5 px-5 bg-green-50 rounded-xl hover:bg-green-100 transition-colors">
+              <a href="https://wa.me/923119523856" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 text-green-700 font-semibold text-sm py-2.5 px-5 bg-green-50 rounded-xl hover:bg-green-100 transition-colors">
                 <MessageCircle size={15} /> WhatsApp
               </a>
             </div>

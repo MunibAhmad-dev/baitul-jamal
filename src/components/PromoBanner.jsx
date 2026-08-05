@@ -68,14 +68,14 @@ export default function PromoBanner() {
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <a
-                href="tel:+9231199523856"
+                href="tel:+923119523856"
                 className="inline-flex items-center justify-center gap-2 bg-gold hover:bg-gold-600 text-white font-bold px-8 py-4 rounded-full transition-all hover:shadow-xl hover:-translate-y-0.5 text-base"
               >
                 <Phone size={18} />
-                Call Now: +92 311 9952 3856
+                Call Now: +92 311 9523856
               </a>
               <a
-                href="https://wa.me/9231199523856"
+                href="https://wa.me/923119523856"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 text-white font-bold px-8 py-4 rounded-full transition-all border border-white/20 text-base"

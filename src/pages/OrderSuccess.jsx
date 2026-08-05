@@ -131,7 +131,7 @@ export default function OrderSuccess() {
             Track My Order
           </Link>
           <a
-            href={`https://wa.me/9231199523856?text=${waMessage}`}
+            href={`https://wa.me/923119523856?text=${waMessage}`}
             target="_blank"
             rel="noopener noreferrer"
             className="flex-1 flex items-center justify-center gap-2 py-3 bg-[#25D366] text-white font-bold rounded-xl hover:bg-[#1ebe5d] transition-colors"
@@ -149,7 +149,7 @@ export default function OrderSuccess() {
             Continue Shopping <ArrowRight size={16} />
           </Link>
           <a
-            href="tel:+9231199523856"
+            href="tel:+923119523856"
             className="flex-1 flex items-center justify-center gap-2 py-3 bg-white border border-gray-200 text-gray-700 font-semibold rounded-xl hover:bg-gray-50 transition-colors"
           >
             <Phone size={16} />

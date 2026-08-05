@@ -239,7 +239,7 @@ export default function ProductDetail() {
                 <Heart size={20} className={isWishlisted(product.id) ? 'fill-red-400' : ''} />
               </button>
               <a
-                href="tel:+9231199523856"
+                href="tel:+923119523856"
                 className="flex-1 flex items-center justify-center gap-2 py-4 rounded-2xl border-2 border-brand text-brand font-bold text-base hover:bg-brand hover:text-white transition-all"
               >
                 <Phone size={20} />

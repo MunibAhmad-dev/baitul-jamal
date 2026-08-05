@@ -49,7 +49,7 @@ export default function Footer() {
                 </svg>
               </a>
               <a
-                href="https://wa.me/9231199523856"
+                href="https://wa.me/923119523856"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-9 h-9 bg-gray-800 hover:bg-green-600 rounded-lg flex items-center justify-center transition-colors"
@@ -119,19 +119,19 @@ export default function Footer() {
               </li>
               <li className="flex gap-3 items-center">
                 <Phone size={16} className="text-gold flex-shrink-0" />
-                <a href="tel:+9231199523856" className="text-sm text-gray-300 hover:text-white transition-colors">
-                  +92 311 9952 3856
+                <a href="tel:+923119523856" className="text-sm text-gray-300 hover:text-white transition-colors">
+                  +92 311 9523856
                 </a>
               </li>
               <li className="flex gap-3 items-center">
                 <MessageCircle size={16} className="text-gold flex-shrink-0" />
                 <a
-                  href="https://wa.me/9231199523856"
+                  href="https://wa.me/923119523856"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-sm text-gray-300 hover:text-white transition-colors"
                 >
-                  WhatsApp: +92 311 9952 3856
+                  WhatsApp: +92 311 9523856
                 </a>
               </li>
               <li className="flex gap-3 items-center">

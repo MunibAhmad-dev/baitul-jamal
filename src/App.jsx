@@ -24,7 +24,7 @@ function ScrollToTop() {
 function WhatsAppButton() {
   return (
     <a
-      href="https://wa.me/9231199523856"
+      href="https://wa.me/923119523856"
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Chat on WhatsApp"
