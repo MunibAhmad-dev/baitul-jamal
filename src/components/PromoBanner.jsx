@@ -4,7 +4,7 @@ const features = [
   {
     icon: Truck,
     title: 'Free Delivery',
-    sub: 'On orders above PKR 5,000 in Lahore',
+    sub: 'On orders above PKR 5,000 in Timergara',
   },
   {
     icon: Phone,
@@ -18,8 +18,8 @@ const features = [
   },
   {
     icon: Award,
-    title: '15+ Years of Trust',
-    sub: 'Serving Lahore since 2008',
+    title: 'Trusted Quality',
+    sub: 'Serving Timergara & Dir District',
   },
 ]
 
@@ -47,7 +47,6 @@ export default function PromoBanner() {
 
       {/* Big promo banner */}
       <section className="py-16 md:py-20 bg-gradient-to-br from-brand-900 via-brand-800 to-brand-950 relative overflow-hidden">
-        {/* Decorative elements */}
         <div className="absolute top-0 left-0 w-64 h-64 bg-white/5 rounded-full -translate-x-1/2 -translate-y-1/2" />
         <div className="absolute bottom-0 right-0 w-96 h-96 bg-white/5 rounded-full translate-x-1/3 translate-y-1/3" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full opacity-[0.03]"
@@ -65,18 +64,18 @@ export default function PromoBanner() {
               Get <span className="text-gold">20% Off</span> Your First Order
             </h2>
             <p className="text-brand-200 text-base md:text-lg mb-8 leading-relaxed">
-              Visit our showroom or call us today. Mention this offer to get 20% discount on your first purchase of PKR 10,000 or more.
+              Visit our showroom at Sabaoon Chowk, Timergara or call us today. Mention this offer to get 20% discount on your first purchase of PKR 10,000 or more.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <a
-                href="tel:+923001234567"
+                href="tel:+9231199523856"
                 className="inline-flex items-center justify-center gap-2 bg-gold hover:bg-gold-600 text-white font-bold px-8 py-4 rounded-full transition-all hover:shadow-xl hover:-translate-y-0.5 text-base"
               >
                 <Phone size={18} />
-                Call Now: +92 300 123 4567
+                Call Now: +92 311 9952 3856
               </a>
               <a
-                href="https://wa.me/923001234567"
+                href="https://wa.me/9231199523856"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 text-white font-bold px-8 py-4 rounded-full transition-all border border-white/20 text-base"
@@ -85,7 +84,7 @@ export default function PromoBanner() {
               </a>
             </div>
             <p className="text-brand-300 text-xs mt-6">
-              * Offer valid for in-store purchases in Lahore. Terms apply.
+              * Offer valid for in-store purchases at Timergara showroom. Terms apply.
             </p>
           </div>
         </div>

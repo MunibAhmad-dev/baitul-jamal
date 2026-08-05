@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import { ArrowRight, Shield, Truck, RotateCcw, Star } from 'lucide-react'
 
 const trustBadges = [
-  { icon: Truck, label: 'Free Delivery', sub: 'In Lahore city' },
+  { icon: Truck, label: 'Free Delivery', sub: 'In Timergara' },
   { icon: Shield, label: 'Quality Assured', sub: 'Original products' },
   { icon: RotateCcw, label: '7-Day Returns', sub: 'Hassle free' },
 ]
@@ -31,7 +31,7 @@ export default function Hero() {
             {/* Badge */}
             <div className="inline-flex items-center gap-2 bg-gold/10 border border-gold/30 text-gold-700 text-xs font-semibold px-4 py-2 rounded-full mb-6">
               <Star size={12} fill="currentColor" />
-              Lahore's Trusted Home Store Since 2008
+              Timergara's Trusted Home Store
             </div>
 
             {/* Heading */}
@@ -51,7 +51,7 @@ export default function Hero() {
 
             {/* Sub text */}
             <p className="text-base text-gray-600 mb-8 leading-relaxed max-w-lg">
-              Premium mattresses, handwoven qaleen, elegant majalis sets, plush carpets, and quality bedding — all at the best prices in Lahore.
+              Premium mattresses, handwoven qaleen, elegant majalis sets, plush carpets, curtains, and quality bedding — all at the best prices in Timergara.
             </p>
 
             {/* CTA Buttons */}
@@ -81,53 +81,46 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* Right: Visual collage */}
+          {/* Right: Hero photo */}
           <div className="hidden lg:flex items-center justify-center">
-            <div className="relative w-full max-w-sm h-[460px]">
+            <div className="relative w-full max-w-lg">
 
-              {/* Central large card */}
-              <div className="absolute inset-8 bg-gradient-to-br from-brand-800 to-brand-950 rounded-3xl shadow-2xl flex flex-col items-center justify-center text-white p-8">
-                <div className="text-6xl mb-4">🏡</div>
-                <p className="font-display font-bold text-2xl text-center">Baitul Jamal</p>
-                <p className="text-brand-200 text-sm mt-1 tracking-widest uppercase">House of Beauty</p>
-                <div className="mt-6 grid grid-cols-2 gap-3 w-full">
-                  <div className="bg-white/10 rounded-xl p-3 text-center">
-                    <p className="font-bold text-xl text-gold">120+</p>
-                    <p className="text-xs text-brand-200">Products</p>
-                  </div>
-                  <div className="bg-white/10 rounded-xl p-3 text-center">
-                    <p className="font-bold text-xl text-gold">15yr</p>
-                    <p className="text-xs text-brand-200">Experience</p>
-                  </div>
-                  <div className="bg-white/10 rounded-xl p-3 text-center">
-                    <p className="font-bold text-xl text-gold">5000+</p>
-                    <p className="text-xs text-brand-200">Customers</p>
-                  </div>
-                  <div className="bg-white/10 rounded-xl p-3 text-center">
-                    <p className="font-bold text-xl text-gold">4.9★</p>
-                    <p className="text-xs text-brand-200">Rating</p>
-                  </div>
+              {/* Main photo frame */}
+              <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white">
+                <img
+                  src="/majalis-royal-gold-wide.jpg"
+                  alt="Royal Majalis Setup — Baitul Jamal"
+                  className="w-full aspect-[4/3] object-cover"
+                />
+                {/* Gradient overlay at bottom for label */}
+                <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/60 to-transparent" />
+                <div className="absolute bottom-4 left-5 text-white">
+                  <p className="font-display font-bold text-lg leading-tight">Royal Blue & Gold Majalis</p>
+                  <p className="text-xs text-white/75">Full room setup available</p>
                 </div>
               </div>
 
+              {/* Stats pill — top right */}
+              <div className="absolute -top-4 -right-4 bg-white rounded-2xl shadow-xl px-4 py-3 text-center min-w-[90px]">
+                <p className="font-bold text-xl text-gold">4.9★</p>
+                <p className="text-xs text-gray-500 font-medium">5000+ Happy Customers</p>
+              </div>
+
+              {/* Badge pill — bottom left */}
+              <div className="absolute -bottom-4 -left-4 bg-brand text-white rounded-2xl shadow-xl px-4 py-3">
+                <p className="font-bold text-sm">Premium Quality</p>
+                <p className="text-xs text-brand-200">Sabaoon Chowk · Timergara</p>
+              </div>
+
               {/* Floating category chips */}
-              <div className="absolute top-0 left-0 bg-gradient-to-br from-teal-600 to-teal-800 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg -rotate-3">
-                Mattresses
-              </div>
-              <div className="absolute top-2 right-0 bg-gradient-to-br from-rose-600 to-rose-800 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg rotate-3">
-                Qaleen
-              </div>
-              <div className="absolute bottom-4 left-0 bg-gradient-to-br from-amber-600 to-amber-800 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg rotate-2">
-                Carpets
-              </div>
-              <div className="absolute bottom-2 right-2 bg-gradient-to-br from-purple-600 to-purple-800 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg -rotate-2">
+              <div className="absolute top-10 -left-10 bg-white text-brand text-xs font-bold px-3 py-1.5 rounded-full shadow-lg -rotate-6 border border-brand-100">
                 Majalis
               </div>
-              <div className="absolute top-1/2 -translate-y-1/2 right-0 bg-gradient-to-br from-indigo-600 to-indigo-800 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg rotate-1">
-                Blankets
+              <div className="absolute top-1/3 -right-8 bg-white text-gold-700 text-xs font-bold px-3 py-1.5 rounded-full shadow-lg rotate-6 border border-gold/30">
+                Carpets
               </div>
-              <div className="absolute top-1/2 -translate-y-1/2 left-0 bg-gradient-to-br from-sky-600 to-sky-800 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg -rotate-1">
-                Bedsheets
+              <div className="absolute bottom-14 -right-10 bg-white text-gray-700 text-xs font-bold px-3 py-1.5 rounded-full shadow-lg rotate-3 border border-gray-100">
+                Qaleen
               </div>
             </div>
           </div>

@@ -15,7 +15,7 @@ export default function Footer() {
           <div className="lg:col-span-1">
             <Logo textColor="text-white" />
             <p className="mt-4 text-sm text-gray-400 leading-relaxed">
-              Lahore's trusted name in quality home furnishings since 2008. We bring beauty and comfort to Pakistani homes.
+              Timergara's trusted name in quality home furnishings. We bring beauty and comfort to every home.
             </p>
             <p className="mt-3 text-sm text-gray-400 leading-relaxed" dir="rtl">
               لاہور میں گھریلو سامان کا قابلِ اعتماد نام
@@ -46,7 +46,7 @@ export default function Footer() {
                 </svg>
               </a>
               <a
-                href="https://wa.me/923001234567"
+                href="https://wa.me/9231199523856"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-9 h-9 bg-gray-800 hover:bg-green-600 rounded-lg flex items-center justify-center transition-colors"
@@ -110,25 +110,25 @@ export default function Footer() {
               <li className="flex gap-3">
                 <MapPin size={16} className="text-gold mt-0.5 flex-shrink-0" />
                 <div>
-                  <p className="text-sm text-gray-300">Main Bazaar, Anarkali</p>
-                  <p className="text-sm text-gray-300">Lahore, Pakistan</p>
+                  <p className="text-sm text-gray-300">Sabaoon Chowk, Timergara</p>
+                  <p className="text-sm text-gray-300">Near Parko Electronics, Dir, KPK</p>
                 </div>
               </li>
               <li className="flex gap-3 items-center">
                 <Phone size={16} className="text-gold flex-shrink-0" />
-                <a href="tel:+923001234567" className="text-sm text-gray-300 hover:text-white transition-colors">
-                  +92 300 123 4567
+                <a href="tel:+9231199523856" className="text-sm text-gray-300 hover:text-white transition-colors">
+                  +92 311 9952 3856
                 </a>
               </li>
               <li className="flex gap-3 items-center">
                 <MessageCircle size={16} className="text-gold flex-shrink-0" />
                 <a
-                  href="https://wa.me/923001234567"
+                  href="https://wa.me/9231199523856"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-sm text-gray-300 hover:text-white transition-colors"
                 >
-                  WhatsApp: +92 300 123 4567
+                  WhatsApp: +92 311 9952 3856
                 </a>
               </li>
               <li className="flex gap-3 items-center">
@@ -150,7 +150,7 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="border-t border-gray-800 py-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-gray-500">
           <p>© {new Date().getFullYear()} Baitul Jamal. All rights reserved.</p>
-          <p>Made with ❤️ for Lahore</p>
+          <p>Made with ❤️ for Timergara</p>
         </div>
       </div>
     </footer>

@@ -3,7 +3,7 @@ import { Star, Quote } from 'lucide-react'
 const reviews = [
   {
     name: 'Ahmed Raza',
-    city: 'Gulberg, Lahore',
+    city: 'Sabaoon Chowk, Timergara',
     rating: 5,
     text: 'Bought a complete majalis set for my drawing room. The quality is exceptional and exactly as described. Delivery was on time. Highly recommend Baitul Jamal!',
     initials: 'AR',
@@ -11,7 +11,7 @@ const reviews = [
   },
   {
     name: 'Fatima Malik',
-    city: 'Defence, Lahore',
+    city: 'Timergara City',
     rating: 5,
     text: 'The memory foam mattress I ordered is amazing. Best sleep I\'ve had in years! Price was very reasonable compared to other shops. Will definitely buy again.',
     initials: 'FM',
@@ -19,7 +19,7 @@ const reviews = [
   },
   {
     name: 'Hassan Tariq',
-    city: 'Johar Town, Lahore',
+    city: 'Dir, KPK',
     rating: 5,
     text: 'Got a handwoven Persian qaleen for my living room. It transformed the whole look! The staff was very helpful in choosing the right size and design.',
     initials: 'HT',
@@ -27,7 +27,7 @@ const reviews = [
   },
   {
     name: 'Sana Akhtar',
-    city: 'Model Town, Lahore',
+    city: 'Lower Dir, KPK',
     rating: 4,
     text: 'Ordered bedsheets and blankets for the whole house. Great quality for the price. The printed bedsheet set is beautiful. Cash on delivery made it very convenient.',
     initials: 'SA',

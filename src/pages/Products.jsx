@@ -32,7 +32,7 @@ export default function Products() {
     let list = [...products]
 
     if (activeCategory !== 'all') {
-      list = list.filter(p => p.category === activeCategory)
+      list = list.filter(p => p.category === activeCategory || p.alsoIn?.includes(activeCategory))
     }
 
     if (query) {
@@ -61,16 +61,34 @@ export default function Products() {
       {/* Page header */}
       <div className="bg-white border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <h1 className="font-display font-bold text-3xl text-gray-900">
-            {query
-              ? `Search: "${query}"`
-              : activeCat ? activeCat.name : 'All Products'
-            }
-          </h1>
-          {activeCat && (
-            <p className="text-gray-500 mt-1" dir="rtl">{activeCat.nameUrdu}</p>
+          {activeCat?.nameSubtitle && (
+            <p className="text-gold font-semibold text-xs uppercase tracking-widest mb-1">
+              {activeCat.nameSubtitle}
+            </p>
           )}
-          <p className="text-gray-400 text-sm mt-2">{filtered.length} products found</p>
+          <div className="flex flex-wrap items-baseline gap-3">
+            <h1 className="font-display font-bold text-3xl text-gray-900">
+              {query
+                ? `Search: "${query}"`
+                : activeCat ? activeCat.name : 'All Products'
+              }
+            </h1>
+            {activeCat?.nameUrdu && (
+              <span
+                className="font-bold text-2xl text-gray-500"
+                dir="rtl"
+                style={{ fontFamily: 'Noto Nastaliq Urdu, serif' }}
+              >
+                {activeCat.nameUrdu}
+              </span>
+            )}
+          </div>
+          {activeCat?.description && (
+            <p className="text-gray-500 text-sm mt-2 max-w-2xl leading-relaxed">
+              {activeCat.description}
+            </p>
+          )}
+          <p className="text-gray-400 text-xs mt-3">{filtered.length} products found</p>
         </div>
       </div>
 
@@ -165,6 +183,23 @@ export default function Products() {
                     {cat.name}
                   </button>
                 ))}
+              </div>
+            )}
+
+            {/* Sub-type filter — shown when category has types */}
+            {activeCat?.types && (
+              <div className="mb-5">
+                <p className="text-xs text-gray-400 uppercase tracking-wider font-semibold mb-2">Types</p>
+                <div className="flex flex-wrap gap-2">
+                  {activeCat.types.map(type => (
+                    <span
+                      key={type}
+                      className="px-3 py-1.5 rounded-full text-xs font-medium bg-white border border-brand-200 text-brand cursor-default"
+                    >
+                      {type}
+                    </span>
+                  ))}
+                </div>
               </div>
             )}
 

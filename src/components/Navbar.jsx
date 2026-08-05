@@ -32,8 +32,8 @@ export default function Navbar() {
     <>
       {/* Top announcement bar */}
       <div className="bg-brand-900 text-white text-center text-xs py-2 px-4 font-medium tracking-wide">
-        <span className="hidden sm:inline">🚚 Free Delivery in Lahore on orders above PKR 5,000 &nbsp;|&nbsp; 📞 Call us: </span>
-        <a href="tel:+923001234567" className="underline underline-offset-2 hover:text-gold-300 transition-colors">+92 300 123 4567</a>
+        <span className="hidden sm:inline">🚚 Free Delivery in Timergara &nbsp;|&nbsp; 📞 Call us: </span>
+        <a href="tel:+9231199523856" className="underline underline-offset-2 hover:text-gold-300 transition-colors">+92 311 9952 3856</a>
         <span className="hidden sm:inline"> &nbsp;|&nbsp; Cash on Delivery Available</span>
       </div>
 
@@ -113,7 +113,7 @@ export default function Navbar() {
 
               {/* Call button (desktop only) */}
               <a
-                href="tel:+923001234567"
+                href="tel:+9231199523856"
                 className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-full text-brand border border-brand-200 text-sm font-medium hover:bg-brand-50 transition-colors"
               >
                 <Phone size={14} />
@@ -188,9 +188,9 @@ export default function Navbar() {
               ))}
 
               <div className="pt-2">
-                <a href="tel:+923001234567" className="flex items-center justify-center gap-2 w-full py-3 bg-brand text-white rounded-xl text-sm font-semibold">
+                <a href="tel:+9231199523856" className="flex items-center justify-center gap-2 w-full py-3 bg-brand text-white rounded-xl text-sm font-semibold">
                   <Phone size={16} />
-                  Call to Order: +92 300 123 4567
+                  Call to Order: +92 311 9952 3856
                 </a>
               </div>
             </div>

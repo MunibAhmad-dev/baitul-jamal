@@ -1,12 +1,10 @@
 import { useState } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
-import { Star, ShoppingCart, Phone, Check, ChevronRight, Layers, LayoutGrid, Grip, Sofa, BedDouble, Wind, ArrowLeft } from 'lucide-react'
+import { Star, ShoppingCart, Phone, Check, ChevronRight, ArrowLeft } from 'lucide-react'
 import { useCart } from '@/context/CartContext'
 import { getProductById, products } from '@/data/products'
 import { formatPrice } from '@/lib/utils'
 import ProductCard from '@/components/ProductCard'
-
-const iconMap = { Layers, LayoutGrid, Grip, Sofa, BedDouble, Wind }
 
 export default function ProductDetail() {
   const { id } = useParams()
@@ -15,7 +13,10 @@ export default function ProductDetail() {
   const product = getProductById(id)
 
   const [selectedSize, setSelectedSize] = useState(product?.sizes?.[0] || 'Standard')
+  const [activeImg, setActiveImg] = useState(product?.image || '')
+  const [activeColor, setActiveColor] = useState(product?.colors?.[0] || null)
   const [added, setAdded] = useState(false)
+  const [thumbError, setThumbError] = useState({})
 
   if (!product) {
     return (
@@ -26,10 +27,11 @@ export default function ProductDetail() {
     )
   }
 
-  const Icon = iconMap[product.icon] || Layers
   const discount = product.originalPrice
     ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
     : 0
+
+  const gallery = product.gallery?.length ? product.gallery : [product.image].filter(Boolean)
 
   const related = products
     .filter(p => p.category === product.category && p.id !== product.id)
@@ -40,6 +42,13 @@ export default function ProductDetail() {
     setAdded(true)
     setTimeout(() => setAdded(false), 2000)
   }
+
+  const handleColorSelect = (color) => {
+    setActiveColor(color)
+    if (color.image) setActiveImg(color.image)
+  }
+
+  const displayImg = activeImg || product.image
 
   return (
     <main className="min-h-screen bg-gray-50 pb-20">
@@ -63,7 +72,6 @@ export default function ProductDetail() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
 
-        {/* Back button */}
         <button onClick={() => navigate(-1)} className="flex items-center gap-2 text-sm text-gray-500 hover:text-brand mb-6 transition-colors">
           <ArrowLeft size={16} />
           Back
@@ -71,24 +79,21 @@ export default function ProductDetail() {
 
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-16">
 
-          {/* Visual */}
-          <div>
-            <div className={`w-full aspect-[4/3] rounded-3xl bg-gradient-to-br ${product.gradient} relative overflow-hidden`}>
-              <div className="absolute inset-0 opacity-20"
-                style={{
-                  backgroundImage: `radial-gradient(circle at 20% 80%, white 1px, transparent 1px)`,
-                  backgroundSize: '20px 20px',
-                }}
-              />
-              <div className="absolute -right-12 -top-12 w-48 h-48 rounded-full bg-white/10" />
-              <div className="absolute right-8 bottom-8 w-32 h-32 rounded-full bg-white/8" />
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-32 h-32 bg-white/20 rounded-3xl flex items-center justify-center">
-                  <Icon size={56} className="text-white" />
-                </div>
-              </div>
+          {/* Gallery */}
+          <div className="space-y-3">
+            {/* Main image */}
+            <div className="relative w-full aspect-[4/3] rounded-3xl overflow-hidden bg-gray-100 shadow-sm">
+              {displayImg ? (
+                <img
+                  key={displayImg}
+                  src={displayImg}
+                  alt={product.name}
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <div className={`w-full h-full bg-gradient-to-br ${product.gradient || 'from-brand-700 to-brand-900'}`} />
+              )}
 
-              {/* Badge */}
               {product.badge && (
                 <div className="absolute top-5 left-5">
                   <span className={`text-sm font-bold px-4 py-1.5 rounded-full ${
@@ -99,11 +104,36 @@ export default function ProductDetail() {
                 </div>
               )}
             </div>
+
+            {/* Thumbnail strip */}
+            {gallery.length > 1 && (
+              <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
+                {gallery.map((img, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setActiveImg(img)}
+                    className={`flex-shrink-0 w-16 h-16 rounded-xl overflow-hidden border-2 transition-all ${
+                      activeImg === img ? 'border-brand shadow-md scale-105' : 'border-transparent hover:border-gray-300'
+                    }`}
+                  >
+                    {!thumbError[img] ? (
+                      <img
+                        src={img}
+                        alt=""
+                        onError={() => setThumbError(prev => ({ ...prev, [img]: true }))}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-gray-200" />
+                    )}
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
 
           {/* Details */}
           <div>
-            {/* Category + Urdu */}
             <div className="flex items-center gap-3 mb-3">
               <span className="text-xs font-semibold text-gray-400 uppercase tracking-wider capitalize">{product.category}</span>
               <span className="text-gray-200">•</span>
@@ -114,7 +144,6 @@ export default function ProductDetail() {
               {product.name}
             </h1>
 
-            {/* Rating */}
             <div className="flex items-center gap-3 mb-5">
               <div className="flex items-center gap-1">
                 {[1, 2, 3, 4, 5].map(s => (
@@ -125,7 +154,6 @@ export default function ProductDetail() {
               <span className="text-gray-400 text-sm">({product.reviews} reviews)</span>
             </div>
 
-            {/* Price */}
             <div className="flex items-baseline gap-3 mb-6">
               <span className="font-display font-bold text-3xl text-brand-900">{formatPrice(product.price)}</span>
               {product.originalPrice && (
@@ -138,10 +166,31 @@ export default function ProductDetail() {
               )}
             </div>
 
-            {/* Description */}
-            <p className="text-gray-600 text-base leading-relaxed mb-6">
-              {product.description}
-            </p>
+            <p className="text-gray-600 text-base leading-relaxed mb-6">{product.description}</p>
+
+            {/* Color variants */}
+            {product.colors && product.colors.length > 0 && (
+              <div className="mb-6">
+                <p className="text-sm font-semibold text-gray-800 mb-3">
+                  Color: <span className="font-normal text-gray-500">{activeColor?.name || product.colors[0].name}</span>
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {product.colors.map(c => (
+                    <button
+                      key={c.name}
+                      title={c.name}
+                      onClick={() => handleColorSelect(c)}
+                      className={`w-8 h-8 rounded-full border-4 transition-all ${
+                        activeColor?.name === c.name
+                          ? 'border-brand scale-110 shadow-lg'
+                          : 'border-white hover:border-gray-300 shadow'
+                      }`}
+                      style={{ background: c.hex }}
+                    />
+                  ))}
+                </div>
+              </div>
+            )}
 
             {/* Size selector */}
             {product.sizes && product.sizes.length > 0 && (
@@ -165,21 +214,19 @@ export default function ProductDetail() {
               </div>
             )}
 
-            {/* Action buttons */}
+            {/* Actions */}
             <div className="flex flex-col sm:flex-row gap-3 mb-8">
               <button
                 onClick={handleAdd}
                 className={`flex-1 flex items-center justify-center gap-2 py-4 rounded-2xl font-bold text-base transition-all ${
-                  added
-                    ? 'bg-green-500 text-white'
-                    : 'btn-primary'
+                  added ? 'bg-green-500 text-white' : 'btn-primary'
                 }`}
               >
                 {added ? <Check size={20} /> : <ShoppingCart size={20} />}
                 {added ? 'Added to Cart!' : 'Add to Cart'}
               </button>
               <a
-                href="tel:+923001234567"
+                href="tel:+9231199523856"
                 className="flex-1 flex items-center justify-center gap-2 py-4 rounded-2xl border-2 border-brand text-brand font-bold text-base hover:bg-brand hover:text-white transition-all"
               >
                 <Phone size={20} />
@@ -202,14 +249,12 @@ export default function ProductDetail() {
           </div>
         </div>
 
-        {/* Related products */}
+        {/* Related */}
         {related.length > 0 && (
           <div className="mt-16 md:mt-24">
             <h2 className="section-title mb-8">You May Also Like</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-              {related.map(p => (
-                <ProductCard key={p.id} product={p} />
-              ))}
+              {related.map(p => <ProductCard key={p.id} product={p} />)}
             </div>
           </div>
         )}

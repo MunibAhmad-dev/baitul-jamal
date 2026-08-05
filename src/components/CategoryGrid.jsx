@@ -1,22 +1,12 @@
 import { Link } from 'react-router-dom'
-import { ArrowRight, Layers, LayoutGrid, Grip, Sofa, BedDouble, Wind } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 import { categories } from '@/data/categories'
-
-const iconMap = {
-  Layers: Layers,
-  LayoutGrid: LayoutGrid,
-  Grip: Grip,
-  Sofa: Sofa,
-  BedDouble: BedDouble,
-  Wind: Wind,
-}
 
 export default function CategoryGrid() {
   return (
     <section className="py-16 md:py-24 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-        {/* Section header */}
         <div className="text-center mb-12">
           <p className="text-gold font-semibold text-sm uppercase tracking-widest mb-3">Browse By Category</p>
           <h2 className="section-title mb-4">Everything for Your Home</h2>
@@ -25,65 +15,52 @@ export default function CategoryGrid() {
           </p>
         </div>
 
-        {/* Category grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
-          {categories.map((cat, idx) => {
-            const Icon = iconMap[cat.icon] || Layers
-            const isLarge = idx === 0 || idx === 3
-
-            return (
-              <Link
-                key={cat.id}
-                to={`/products?category=${cat.id}`}
-                className={`
-                  group relative overflow-hidden rounded-2xl md:rounded-3xl
-                  bg-gradient-to-br ${cat.gradient}
-                  card-hover cursor-pointer
-                  ${isLarge ? 'row-span-1 md:col-span-1' : ''}
-                `}
-                style={{ minHeight: isLarge ? '220px' : '180px' }}
-              >
-                {/* Background pattern */}
-                <div className="absolute inset-0 opacity-10"
-                  style={{
-                    backgroundImage: `radial-gradient(circle at 30% 70%, white 1px, transparent 1px)`,
-                    backgroundSize: '20px 20px',
-                  }}
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 md:gap-5">
+          {categories.map((cat) => (
+            <Link
+              key={cat.id}
+              to={`/products?category=${cat.id}`}
+              className="group relative overflow-hidden rounded-2xl block"
+              style={{ height: '190px' }}
+            >
+              {cat.image ? (
+                <img
+                  src={cat.image}
+                  alt={cat.name}
+                  className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
+              ) : (
+                <div className={`absolute inset-0 bg-gradient-to-br ${cat.gradient}`} />
+              )}
 
-                {/* Decorative circles */}
-                <div className="absolute -right-8 -top-8 w-32 h-32 rounded-full bg-white/10" />
-                <div className="absolute -right-4 top-8 w-20 h-20 rounded-full bg-white/5" />
+              {/* Dark overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/5 group-hover:from-black/85 transition-colors duration-300" />
 
-                {/* Content */}
-                <div className="relative z-10 p-6 md:p-7 h-full flex flex-col justify-between">
-                  <div>
-                    <div className="w-12 h-12 md:w-14 md:h-14 bg-white/20 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
-                      <Icon size={24} className="text-white" />
-                    </div>
-                    <h3 className="font-display font-bold text-white text-lg md:text-xl leading-tight">
-                      {cat.name}
-                    </h3>
-                    <p className="text-white/70 text-xs mt-1 font-medium" dir="rtl">
-                      {cat.nameUrdu}
-                    </p>
-                    <p className="text-white/60 text-xs mt-2 leading-relaxed hidden md:block">
-                      {cat.description}
-                    </p>
-                  </div>
+              {/* Types badge — top right */}
+              {cat.types && (
+                <div className="absolute top-3 right-3">
+                  <span className="text-[10px] font-semibold bg-white/20 text-white px-2 py-0.5 rounded-full backdrop-blur-sm">
+                    {cat.types.length} types
+                  </span>
+                </div>
+              )}
 
-                  <div className="flex items-center justify-between mt-4">
-                    <span className="text-white/80 text-xs font-medium bg-white/15 px-3 py-1 rounded-full">
-                      {cat.count}+ Products
-                    </span>
-                    <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center group-hover:bg-white/40 group-hover:translate-x-1 transition-all duration-300">
-                      <ArrowRight size={14} className="text-white" />
-                    </div>
+              <div className="absolute bottom-0 left-0 right-0 p-4">
+                <h3 className="font-display font-bold text-white text-sm md:text-base leading-tight">
+                  {cat.name}
+                </h3>
+                {cat.nameUrdu && (
+                  <p className="text-white/65 text-[11px] mt-0.5" dir="rtl">{cat.nameUrdu}</p>
+                )}
+                <div className="flex items-center justify-between mt-2">
+                  <span className="text-white/55 text-[11px]">{cat.count}+ items</span>
+                  <div className="w-6 h-6 bg-white/20 rounded-full flex items-center justify-center group-hover:bg-white/40 group-hover:translate-x-0.5 transition-all duration-300">
+                    <ArrowRight size={12} className="text-white" />
                   </div>
                 </div>
-              </Link>
-            )
-          })}
+              </div>
+            </Link>
+          ))}
         </div>
       </div>
     </section>

@@ -3,15 +3,11 @@ import { Link } from 'react-router-dom'
 import { ArrowRight } from 'lucide-react'
 import ProductCard from './ProductCard'
 import { products } from '@/data/products'
+import { categories } from '@/data/categories'
 
 const tabs = [
   { id: 'all', label: 'All' },
-  { id: 'mattresses', label: 'Mattresses' },
-  { id: 'carpets', label: 'Carpets' },
-  { id: 'qaleen', label: 'Qaleen' },
-  { id: 'majalis', label: 'Majalis' },
-  { id: 'bedsheets', label: 'Bedsheets' },
-  { id: 'blankets', label: 'Blankets' },
+  ...categories.map(c => ({ id: c.id, label: c.name.split(' ')[0] })),
 ]
 
 export default function FeaturedProducts() {
