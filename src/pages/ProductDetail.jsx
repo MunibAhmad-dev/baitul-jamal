@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
-import { Star, ShoppingCart, Phone, Check, ChevronRight, ArrowLeft } from 'lucide-react'
+import { Star, ShoppingCart, Phone, Check, ChevronRight, ArrowLeft, Heart } from 'lucide-react'
 import { useCart } from '@/context/CartContext'
+import { useWishlist } from '@/context/WishlistContext'
 import { getProductById, products } from '@/data/products'
 import { formatPrice } from '@/lib/utils'
 import ProductCard from '@/components/ProductCard'
@@ -10,6 +11,7 @@ export default function ProductDetail() {
   const { id } = useParams()
   const navigate = useNavigate()
   const { addItem } = useCart()
+  const { toggle, isWishlisted } = useWishlist()
   const product = getProductById(id)
 
   const [selectedSize, setSelectedSize] = useState(product?.sizes?.[0] || 'Standard')
@@ -224,6 +226,17 @@ export default function ProductDetail() {
               >
                 {added ? <Check size={20} /> : <ShoppingCart size={20} />}
                 {added ? 'Added to Cart!' : 'Add to Cart'}
+              </button>
+              <button
+                onClick={() => toggle(product.id)}
+                className={`flex items-center justify-center gap-2 py-4 px-5 rounded-2xl border-2 font-bold text-base transition-all ${
+                  isWishlisted(product.id)
+                    ? 'border-red-400 bg-red-50 text-red-500'
+                    : 'border-gray-200 text-gray-500 hover:border-red-300 hover:text-red-400'
+                }`}
+                title={isWishlisted(product.id) ? 'Remove from wishlist' : 'Save to wishlist'}
+              >
+                <Heart size={20} className={isWishlisted(product.id) ? 'fill-red-400' : ''} />
               </button>
               <a
                 href="tel:+9231199523856"

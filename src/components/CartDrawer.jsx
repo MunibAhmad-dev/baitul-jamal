@@ -1,10 +1,11 @@
 import { X, Minus, Plus, Trash2, ShoppingBag } from 'lucide-react'
 import { useCart } from '@/context/CartContext'
 import { formatPrice } from '@/lib/utils'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 export default function CartDrawer() {
   const { items, isOpen, setIsOpen, removeItem, updateQty, totalPrice, totalItems } = useCart()
+  const navigate = useNavigate()
 
   if (!isOpen) return null
 
@@ -102,7 +103,10 @@ export default function CartDrawer() {
               <span className="font-display font-bold text-xl text-gray-900">{formatPrice(totalPrice)}</span>
             </div>
             <p className="text-xs text-gray-400 text-center">Delivery charges calculated at checkout</p>
-            <button className="w-full btn-primary py-4 text-base rounded-xl">
+            <button
+              className="w-full btn-primary py-4 text-base rounded-xl"
+              onClick={() => { setIsOpen(false); navigate('/checkout') }}
+            >
               Proceed to Checkout
             </button>
             <button

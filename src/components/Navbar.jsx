@@ -1,16 +1,21 @@
 import { useState, useEffect } from 'react'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
-import { Search, ShoppingCart, Menu, X, ChevronDown, Phone } from 'lucide-react'
+import { Search, ShoppingCart, Menu, X, ChevronDown, Phone, Heart, User, LogOut, Package } from 'lucide-react'
 import Logo from './Logo'
 import { useCart } from '@/context/CartContext'
+import { useAuth } from '@/context/AuthContext'
+import { useWishlist } from '@/context/WishlistContext'
 import { categories } from '@/data/categories'
 
 export default function Navbar() {
   const { totalItems, setIsOpen } = useCart()
+  const { user, logout } = useAuth()
+  const { count: wishlistCount } = useWishlist()
   const [mobileOpen, setMobileOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [searchOpen, setSearchOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
+  const [accountOpen, setAccountOpen] = useState(false)
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -101,7 +106,7 @@ export default function Navbar() {
             </div>
 
             {/* Right icons */}
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1">
               {/* Search */}
               <button
                 onClick={() => setSearchOpen(!searchOpen)}
@@ -119,6 +124,77 @@ export default function Navbar() {
                 <Phone size={14} />
                 Order Now
               </a>
+
+              {/* Wishlist */}
+              <Link
+                to="/account"
+                className="relative p-2 rounded-full hover:bg-gray-100 transition-colors text-gray-600 hover:text-brand"
+                aria-label="Wishlist"
+              >
+                <Heart size={20} />
+                {wishlistCount > 0 && (
+                  <span className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-red-500 text-white text-[9px] font-bold rounded-full flex items-center justify-center">
+                    {wishlistCount > 9 ? '9+' : wishlistCount}
+                  </span>
+                )}
+              </Link>
+
+              {/* Account */}
+              <div className="relative hidden sm:block">
+                <button
+                  onClick={() => setAccountOpen(!accountOpen)}
+                  className="flex items-center gap-1.5 p-2 rounded-full hover:bg-gray-100 transition-colors text-gray-600 hover:text-brand"
+                  aria-label="Account"
+                >
+                  {user
+                    ? <div className="w-7 h-7 rounded-full bg-brand text-white text-xs font-bold flex items-center justify-center">{user.name[0].toUpperCase()}</div>
+                    : <User size={20} />
+                  }
+                </button>
+
+                {accountOpen && (
+                  <>
+                    <div className="fixed inset-0 z-10" onClick={() => setAccountOpen(false)} />
+                    <div className="absolute right-0 top-full mt-2 w-52 bg-white rounded-2xl shadow-xl border border-gray-100 py-2 z-20 animate-fade-in">
+                      {user ? (
+                        <>
+                          <div className="px-4 py-2.5 border-b border-gray-100">
+                            <p className="text-sm font-bold text-gray-900">{user.name}</p>
+                            <p className="text-xs text-gray-400">{user.phone}</p>
+                          </div>
+                          <Link to="/account" onClick={() => setAccountOpen(false)}
+                            className="flex items-center gap-2.5 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
+                            <Package size={15} className="text-gray-400" /> My Orders
+                          </Link>
+                          <Link to="/track-order" onClick={() => setAccountOpen(false)}
+                            className="flex items-center gap-2.5 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
+                            <Package size={15} className="text-gray-400" /> Track Order
+                          </Link>
+                          <button onClick={() => { logout(); setAccountOpen(false) }}
+                            className="flex items-center gap-2.5 w-full px-4 py-2.5 text-sm text-red-500 hover:bg-red-50 transition-colors">
+                            <LogOut size={15} /> Log Out
+                          </button>
+                        </>
+                      ) : (
+                        <>
+                          <Link to="/account" onClick={() => setAccountOpen(false)}
+                            className="flex items-center gap-2.5 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
+                            <User size={15} className="text-gray-400" /> Log In
+                          </Link>
+                          <Link to="/account" onClick={() => setAccountOpen(false)}
+                            className="flex items-center gap-2.5 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
+                            <User size={15} className="text-gray-400" /> Sign Up
+                          </Link>
+                          <Link to="/track-order" onClick={() => setAccountOpen(false)}
+                            className="flex items-center gap-2.5 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
+                            <Package size={15} className="text-gray-400" /> Track Order
+                          </Link>
+                        </>
+                      )}
+                    </div>
+                  </>
+                )}
+              </div>
 
               {/* Cart */}
               <button
@@ -187,7 +263,28 @@ export default function Navbar() {
                 </Link>
               ))}
 
-              <div className="pt-2">
+              <div className="pt-2 space-y-2">
+                <Link to="/track-order" onClick={() => setMobileOpen(false)}
+                  className="flex items-center gap-2 px-4 py-3 rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-50">
+                  <Package size={16} className="text-gray-400" /> Track Order
+                </Link>
+                {user ? (
+                  <>
+                    <Link to="/account" onClick={() => setMobileOpen(false)}
+                      className="flex items-center gap-2 px-4 py-3 rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-50">
+                      <User size={16} className="text-gray-400" /> My Account ({user.name})
+                    </Link>
+                    <button onClick={() => { logout(); setMobileOpen(false) }}
+                      className="flex items-center gap-2 w-full px-4 py-3 rounded-xl text-sm font-medium text-red-500 hover:bg-red-50">
+                      <LogOut size={16} /> Log Out
+                    </button>
+                  </>
+                ) : (
+                  <Link to="/account" onClick={() => setMobileOpen(false)}
+                    className="flex items-center gap-2 px-4 py-3 rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-50">
+                    <User size={16} className="text-gray-400" /> Login / Sign Up
+                  </Link>
+                )}
                 <a href="tel:+9231199523856" className="flex items-center justify-center gap-2 w-full py-3 bg-brand text-white rounded-xl text-sm font-semibold">
                   <Phone size={16} />
                   Call to Order: +92 311 9952 3856

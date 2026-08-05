@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Star, ShoppingCart, Eye } from 'lucide-react'
+import { Star, ShoppingCart, Eye, Heart } from 'lucide-react'
 import { useCart } from '@/context/CartContext'
+import { useWishlist } from '@/context/WishlistContext'
 import { formatPrice } from '@/lib/utils'
 
 const categoryLabels = {
@@ -15,8 +16,15 @@ const categoryLabels = {
 
 export default function ProductCard({ product }) {
   const { addItem } = useCart()
+  const { toggle, isWishlisted } = useWishlist()
   const [added, setAdded] = useState(false)
   const [imgError, setImgError] = useState(false)
+  const wishlisted = isWishlisted(product.id)
+
+  const handleWishlist = (e) => {
+    e.preventDefault()
+    toggle(product.id)
+  }
 
   const discount = product.originalPrice
     ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
@@ -88,9 +96,20 @@ export default function ProductCard({ product }) {
           </div>
         )}
 
-        {/* Quick-view pill */}
-        <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-          <div className="w-8 h-8 bg-white/90 rounded-full flex items-center justify-center shadow-md">
+        {/* Top-right actions */}
+        <div className="absolute top-3 right-3 flex flex-col gap-1.5">
+          <button
+            onClick={handleWishlist}
+            className={`w-8 h-8 rounded-full flex items-center justify-center shadow-md transition-all ${
+              wishlisted
+                ? 'bg-red-500 opacity-100'
+                : 'bg-white/90 opacity-0 group-hover:opacity-100'
+            }`}
+            title={wishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
+          >
+            <Heart size={14} className={wishlisted ? 'fill-white text-white' : 'text-gray-700'} />
+          </button>
+          <div className="w-8 h-8 bg-white/90 rounded-full flex items-center justify-center shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-200">
             <Eye size={14} className="text-gray-700" />
           </div>
         </div>
