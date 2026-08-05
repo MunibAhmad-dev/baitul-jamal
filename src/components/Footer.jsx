@@ -14,11 +14,14 @@ export default function Footer() {
           {/* Brand */}
           <div className="lg:col-span-1">
             <Logo textColor="text-white" />
-            <p className="mt-4 text-sm text-gray-400 leading-relaxed">
+            <p className="mt-4 text-2xl font-semibold text-gold/90 tracking-wide" dir="rtl" style={{ fontFamily: 'serif' }}>
+              بيت الجمال
+            </p>
+            <p className="mt-2 text-sm text-gray-400 leading-relaxed">
               Timergara's trusted name in quality home furnishings. We bring beauty and comfort to every home.
             </p>
-            <p className="mt-3 text-sm text-gray-400 leading-relaxed" dir="rtl">
-              لاہور میں گھریلو سامان کا قابلِ اعتماد نام
+            <p className="mt-2 text-sm text-gray-400 leading-relaxed" dir="rtl">
+              ٹیمرگرہ میں گھریلو سامان کا قابلِ اعتماد نام
             </p>
 
             {/* Social */}

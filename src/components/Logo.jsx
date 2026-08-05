@@ -26,7 +26,10 @@ export default function Logo({ className = '', textColor = 'text-brand-900' }) {
         <div className={`font-display font-bold text-xl tracking-tight ${textColor}`}>
           Baitul <span className="text-gold">Jamal</span>
         </div>
-        <div className="text-[9px] font-sans font-medium tracking-[0.2em] uppercase text-gray-500 mt-0.5">
+        <div className="text-[11px] font-medium text-gold/80 mt-0.5 tracking-wide" dir="rtl" style={{ fontFamily: 'serif' }}>
+          بيت الجمال
+        </div>
+        <div className="text-[8px] font-sans font-medium tracking-[0.2em] uppercase text-gray-400 mt-0.5">
           Home &amp; Living
         </div>
       </div>
